@@ -12,7 +12,7 @@ RMSE on a fixed validation set.
 Data split:
 60% train / 20% validation / 20% test
 Random state fixed at 42.
-The test set is locked and not used for baseline tuning.
+The 20% test set is fully held out and will not be accessed during model development or agent iteration.
 
 How to run:
 1. Install dependencies:
