@@ -25,10 +25,10 @@ Expected output:
 The script prints the number of rows, train/validation/test sizes, validation RMSE, validation R2, and runtime.
 
 Current baseline result:
-Rows: 114000
-Train size: 68400
-Validation size: 22800
-Locked test size: 22800
-Validation RMSE: 22.0630
-Validation R2: 0.0255
-Runtime (seconds): 0.65
+- Rows: 114000
+- Train size: 68400
+- Validation size: 22800
+- Locked test size: 22800
+- Validation RMSE: 22.0630
+- Validation R2: 0.0255
+- Runtime (seconds): 0.65
