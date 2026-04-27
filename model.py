@@ -1,4 +1,4 @@
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 
 def build_model():
-    return LinearRegression()
+    return RandomForestRegressor(n_estimators=200, random_state=42, n_jobs=-1)
