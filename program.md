@@ -67,3 +67,38 @@ Try simple model changes first:
 Do not try deep learning yet.
 Do not add external data.
 Do not change the target variable.
+
+## Week 4 Controlled Experiment Plan
+
+### Experiment Axis
+The experiment axis for this week is the number of trees (n_estimators) in the RandomForestRegressor model.
+
+### Conditions Tested
+- n_estimators = 50
+- n_estimators = 100
+- n_estimators = 200
+- n_estimators = 300
+
+### What Is Held Fixed
+The following components are held constant across all experiments:
+- dataset (data/spotify.csv)
+- feature set (numeric features only)
+- train/validation/test split
+- random_state = 42
+- evaluation metric (validation RMSE)
+- model family (RandomForestRegressor)
+
+### Logging and Artifacts
+The agent may create and update files in the week4/ directory, including:
+- experiment_matrix.csv
+- metric_over_time.png
+- error_taxonomy.md
+- failure_analysis_memo.md
+
+The agent may NOT modify:
+- run.py
+- data/spotify.csv
+- evaluation logic
+
+### Goal
+The goal of this experiment is to determine how increasing model complexity (via number of trees) affects validation RMSE and runtime, and to identify whether diminishing returns occur.

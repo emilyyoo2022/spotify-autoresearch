@@ -1,0 +1,5 @@
+experiment,n_estimators,validation_rmse,validation_r2,runtime_seconds
+1,50,15.1752,0.5390,9.67
+2,100,15.0714,0.5453,19.56
+3,200,15.0254,0.5480,39.76
+4,300,14.9942,0.5499,58.46
