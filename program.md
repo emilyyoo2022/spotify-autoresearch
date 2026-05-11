@@ -102,3 +102,49 @@ The agent may NOT modify:
 
 ### Goal
 The goal of this experiment is to determine how increasing model complexity (via number of trees) affects validation RMSE and runtime, and to identify whether diminishing returns occur.
+
+## Week 5 Autonomous Block Plan
+
+### Goal
+Run a real autonomous experiment block focused on feature engineering and preprocessing to improve validation RMSE for Spotify popularity prediction.
+
+### Starting Point
+The current best model is RandomForestRegressor with n_estimators=200 or the best retained Random Forest model from Week 4.
+
+### Optimization Target
+Minimize validation RMSE.
+
+### Agent May Modify
+- model.py
+- files inside week5/
+
+### Agent May Not Modify
+- run.py
+- data/spotify.csv
+- train/validation/test split
+- target variable
+- RMSE evaluation logic
+- requirements.txt unless a package is already installed and approved
+
+### Experiment Focus
+The agent should test feature engineering and preprocessing changes, such as:
+- adding interaction features between numeric audio variables
+- using polynomial features cautiously
+- scaling or transforming numeric features
+- trying feature selection
+- testing whether duplicate removal should be proposed as a future data-level experiment, but not modifying the dataset directly
+
+### Rules
+Each run must make one interpretable change.
+Each run must be logged.
+Each run must be labeled keep, discard, or crash.
+Changes should be kept only if validation RMSE improves.
+If a run worsens performance or crashes, revert to the previous best model.py.
+
+### Required Week 5 Artifacts
+The agent should create:
+- week5/experiment_log_bundle.csv
+- week5/metric_trajectory.png
+- week5/keep_discard_crash_summary.md
+- week5/best_vs_baseline.md
+- week5/what_actually_worked_memo.md

@@ -1,0 +1,14 @@
+experiment_id,change_description,model_type,validation_rmse,validation_r2,runtime_seconds,decision,rollback_performed,notes
+baseline,RF n_estimators=200 numeric features only (Week 4 retained),RandomForestRegressor,15.0254,0.5480,50.65,baseline,no,Week 4 best retained model; starting point for Week 5
+E1,Add log1p(duration_ms) to feature set,RandomForestRegressor,15.0232,0.5482,50.65,keep,no,Tiny improvement (0.002 RMSE); duration_ms is right-skewed and benefits from compression
+E2,Add log1p(loudness+60) on top of E1,RandomForestRegressor,15.0259,0.5480,53.69,discard,yes,Worse than E1 by 0.003; loudness shift+log adds noise rather than signal for RF
+E3,Drop key/mode/time_signature/index + log_duration only,RandomForestRegressor,15.7345,0.5044,40.90,discard,yes,Much worse (+0.711 RMSE); those features carry real signal despite low intuitive importance
+E4,Add danceability x energy interaction term (on E1),RandomForestRegressor,15.0361,0.5474,54.63,discard,yes,Worse by 0.013; RF already discovers this interaction via tree splits
+E5,Add energy x loudness interaction term (on E1),RandomForestRegressor,15.0292,0.5478,52.05,discard,yes,Worse by 0.006; RF handles correlated-feature interactions natively
+E6,Add tempo x danceability interaction term (on E1),RandomForestRegressor,15.0424,0.5470,53.59,discard,yes,Worse by 0.019; manual interaction terms add noise for tree models
+E7,Add log1p(instrumentalness) to E1 feature set,RandomForestRegressor,15.0196,0.5484,54.31,keep,no,Best result; instrumentalness is zero-inflated and benefits from log compression
+E8,Add log1p(speechiness) and log1p(acousticness) on top of E7,RandomForestRegressor,15.0261,0.5480,93.40,discard,yes,Worse by 0.007; over-transformation; speechiness and acousticness are less skewed
+E9,HistGradientBoostingRegressor max_iter=500 lr=0.05 max_depth=6 with E7 features,HistGradientBoostingRegressor,17.7524,0.3691,4.55,discard,yes,Much worse (+2.733 RMSE); boosting with these params underperforms RF substantially
+E10,RF max_features=0.5 with E7 features,RandomForestRegressor,15.3764,0.5267,33.59,discard,yes,Worse by 0.357; restricting feature fraction per split reduces diversity benefit
+E11,ExtraTreesRegressor n_estimators=200 with E7 features,ExtraTreesRegressor,15.4511,0.5221,21.38,discard,yes,Worse by 0.432; increased randomization in splits hurts on this dataset
+E12,RF min_samples_leaf=3 with E7 features,RandomForestRegressor,15.2800,0.5326,54.54,discard,yes,Worse by 0.260; leaf regularization is not the bottleneck here
