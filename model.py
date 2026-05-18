@@ -7,6 +7,11 @@ from sklearn.ensemble import RandomForestRegressor
 
 def _engineer_features(X):
     X = pd.DataFrame(X).copy()
+    # Drop index column: dataset row number, not a real audio feature.
+    # It carried high RF importance as a noisy genre proxy (dataset is ordered by genre),
+    # but is an artifact. Removing it gives a cleaner, more interpretable model.
+    if 'index' in X.columns:
+        X = X.drop(columns=['index'])
     X['log_duration_ms'] = np.log1p(X['duration_ms'])
     X['log_instrumentalness'] = np.log1p(X['instrumentalness'])
     return X

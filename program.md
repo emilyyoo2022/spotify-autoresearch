@@ -148,3 +148,45 @@ The agent should create:
 - week5/keep_discard_crash_summary.md
 - week5/best_vs_baseline.md
 - week5/what_actually_worked_memo.md
+
+## Week 6 Scope Lock
+
+### Locked Final Direction
+The project focuses on understanding where Spotify popularity prediction succeeds and fails using numeric audio features. No new directions, datasets, or model families will be introduced. All remaining work is analysis, polishing, and explanation of existing evidence.
+
+### Main Claim
+Tree-based ensemble models significantly outperform linear models, but improvements plateau quickly when relying only on numeric audio features.
+
+### Bucket Analysis Result (Week 6 Final Analysis)
+Popularity prediction quality differs sharply by range. The model performs best on medium-popularity tracks (RMSE 11.53) and worst on high-popularity tracks (RMSE 31.72, bias −27.85). This is a regression-to-the-mean effect caused by unobserved features — artist fame, playlist placement, release context — that determine which good-sounding songs become hits.
+
+### Officially Dropped Directions
+- continued RF n_estimators scaling beyond 300
+- aggressive hyperparameter tuning (grid/random search)
+- major model-family exploration (XGBoost, LightGBM, CatBoost, SVR, stacking)
+- neural networks
+- external data / API integration
+- large dataset expansion
+- broad feature explosion (polynomial, all pairwise interactions, PCA)
+- categorical feature encoding (track_genre, explicit, artist)
+- changing evaluation logic or switching from RMSE
+
+### Final Two-Week Plan
+
+Week 6 (complete):
+- lock project story and main claim
+- run and document popularity bucket analysis
+- finalize ablation evidence table
+- write dropped directions, final story, and scope-lock memo
+- generate supporting artifacts (data quality, feature importances)
+- perform deliverable audit
+
+Week 7 (polish and presentation only):
+- polish final plots for presentation quality
+- assemble final report
+- prepare presentation
+- run confirmation checks only
+- do not reopen model search or introduce new analysis directions
+
+### Future Work Scope
+Future work is limited to polishing, validating, and explaining the existing evidence. The scientific analysis is complete. No new experiments, model changes, or dataset modifications are in scope.
