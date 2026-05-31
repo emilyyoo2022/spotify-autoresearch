@@ -1,34 +1,47 @@
-Spotify AutoResearch Baseline
+# Spotify Popularity Prediction — AutoResearch Project
 
-Project goal:
-Predict Spotify song popularity using Spotify audio features.
+## Project Overview
 
-Current baseline:
-Linear regression using numeric features only.
+This project investigates whether Spotify track popularity can be predicted from numeric audio features alone, using an automated research workflow. The work was conducted as part of an AutoResearch project spanning multiple weeks of model development, experimentation, and analysis.
 
-Validation metric:
-RMSE on a fixed validation set.
+## Research Question
 
-Data split:
-60% train / 20% validation / 20% test
-Random state fixed at 42.
-The 20% test set is fully held out and will not be accessed during model development or agent iteration.
+Can Spotify track popularity be predicted from numeric audio features, and what are the practical limits of audio-only prediction?
 
-How to run:
-1. Install dependencies:
-   pip3 install -r requirements.txt
+## Final Results
 
-2. Run baseline:
-   python3 run.py
+| Model | RMSE |
+|---|---|
+| Linear Regression (baseline) | 22.06 |
+| Random Forest (final) | 15.72 |
 
-Expected output:
-The script prints the number of rows, train/validation/test sizes, validation RMSE, validation R2, and runtime.
+The final model achieved a **28.7% reduction in prediction error** over the linear baseline. Error was highest in the high-popularity bucket (RMSE: 28.48), where audio features are least predictive.
 
-Current baseline result:
-- Rows: 114000
-- Train size: 68400
-- Validation size: 22800
-- Locked test size: 22800
-- Validation RMSE: 22.0630
-- Validation R2: 0.0255
-- Runtime (seconds): 0.65
+**Main conclusion:** Audio features provide meaningful signal for popularity prediction, but a feature ceiling exists. Contextual factors — playlist placement, artist reputation, release timing — are not captured in audio data and account for the residual error.
+
+## Repository Structure
+
+```
+week3/          Early exploration and data analysis
+week4/          Feature engineering and initial model experiments
+week5/          Hyperparameter tuning and cross-validation
+week6/          Bucket analysis and error characterization
+final_deliverables/   Final report, slides, results, and reflection
+```
+
+## Running the Code
+
+```bash
+pip install -r requirements.txt
+python run.py
+```
+
+## Final Deliverables
+
+All final outputs are in `final_deliverables/`:
+
+- `final_report.pdf` — Full written report
+- `final_presentation_slides.pptx` — Presentation deck
+- `final_results_table.md` — Summary of all model results
+- `reflection_memo.md` — Reflection on the research process
+- `full_experiment_record.md` — Complete log of experiments and findings
