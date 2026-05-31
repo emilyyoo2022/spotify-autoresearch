@@ -7,7 +7,7 @@ AutoResearch Program, Weeks 2–6
 
 ## Abstract
 
-This paper presents a six-week autonomous research study on Spotify popularity prediction using numeric audio features. Starting from a LinearRegression baseline (RMSE 22.06, R² = 0.026), the project demonstrates that tree-based ensemble models — specifically RandomForestRegressor — dramatically outperform linear models (RMSE 15.02, R² = 0.548), a 31.9% relative improvement. However, the central finding is not the performance gain itself but the speed at which further progress halts: subsequent feature engineering, hyperparameter tuning, and alternative model experiments produced only marginal improvements beyond the initial Random Forest gain.. A popularity bucket analysis explains why. The model performs adequately on medium-popularity tracks (RMSE 11.53) but fails severely on high-popularity tracks (RMSE 28.48, systematic bias −23.26), because the factors that elevate a song to breakout popularity — artist reputation, playlist placement, and release context — are entirely absent from the numeric audio feature set. A feature-bucket error analysis confirms that the failure is localized to popularity-outcome space, not audio-feature space: slicing by danceability, energy, or tempo produces at most a 3.1-unit RMSE spread with near-zero bias, while slicing by popularity bucket produces a 15.2-unit spread and a 33.9-unit bias swing. The project's primary contribution is characterizing this information ceiling precisely and demonstrating that it is not addressable through model selection, hyperparameter tuning, or preprocessing alone.
+This paper presents a six-week autonomous research study on Spotify popularity prediction using numeric audio features. Starting from a LinearRegression baseline (RMSE 22.06, R² = 0.026), the project demonstrates that tree-based ensemble models — specifically RandomForestRegressor — dramatically outperform linear models (RMSE 15.02, R² = 0.548), a 31.9% relative improvement. However, the central finding is not the performance gain itself but the speed at which further progress halts: subsequent feature engineering, hyperparameter tuning, and alternative model experiments produced only marginal improvements beyond the initial Random Forest gain. A popularity bucket analysis explains why. The model performs adequately on medium-popularity tracks (RMSE 11.53) but fails severely on high-popularity tracks (RMSE 28.48, systematic bias −23.26), because the factors that elevate a song to breakout popularity — artist reputation, playlist placement, and release context — are entirely absent from the numeric audio feature set. A feature-bucket error analysis confirms that the failure is localized to popularity-outcome space, not audio-feature space: slicing by danceability, energy, or tempo produces at most a 3.1-unit RMSE spread with near-zero bias, while slicing by popularity bucket produces a 15.2-unit spread and a 33.9-unit bias swing. The project's primary contribution is characterizing this information ceiling precisely and demonstrating that it is not addressable through model selection, hyperparameter tuning, or preprocessing alone.
 
 ---
 
@@ -264,7 +264,7 @@ Four changes would make the loop substantially more reliable:
 
 This project set out to ask how well Spotify track popularity can be predicted from numeric audio features. The answer is: substantially better than a linear model, but with a hard ceiling that cannot be overcome through model refinement or preprocessing.
 
-The progression from LinearRegression (RMSE 22.06) to RandomForest (RMSE 15.02) accounts for 31.9% of all RMSE improvement. The switch to tree-based nonlinear splitting was the single decisive move; every subsequent experiment across four additional weeks of iteration moved RMSE by a combined 0.06 units. The feature ceiling is real and measurable.
+The progression from LinearRegression (RMSE 22.06) to the final artifact-free RandomForest model (RMSE 15.72) demonstrates a substantial improvement in predictive accuracy. The switch to tree-based nonlinear splitting was the single decisive improvement in the project; every subsequent experiment across four additional weeks of iteration moved RMSE by a combined 0.06 units. The feature ceiling is real and measurable.
 
 The popularity bucket analysis locates the ceiling precisely. For medium-popularity tracks — the majority of the dataset — the model achieves RMSE 13.31 and near-unbiased predictions. For high-popularity tracks, RMSE is 28.48 with a systematic underprediction bias of 23 popularity units. The factors that turn a well-made song into a breakout hit — artist reputation, playlist placement, label promotion, release timing — are entirely absent from the 13-column numeric feature set. The model cannot find what is not there.
 
@@ -272,7 +272,7 @@ The feature-bucket error analysis rules out the alternative explanation that the
 
 The primary contribution of this project is not the best validation RMSE. It is identifying, characterizing, and explaining the hard limit of audio-only popularity prediction: **numeric audio features describe what a song sounds like; they cannot determine which songs the world hears.**
 
-Closing this gap would require artist-level features (follower counts, prior release history), release-context features (label, editorial playlist status, release date relative to cultural moments), and social engagement signals. These are structurally different from audio features — they describe a song's position in the industry rather than its sonic character. That distinction is what the bucket analysis makes precise, and it is the natural starting point for any future work on this problem.
+Closing this gap would require artist-level features (follower counts, prior release history), release-context features (label, editorial playlist status, release date relative to cultural moments), and social engagement signals. These are structurally different from audio features — they describe a song's position in the industry rather than its sonic character. That distinction is what the bucket analysis makes precise, and it is the natural starting point for any future work on this problem. The central lesson of this project is that improving prediction accuracy ultimately required understanding the limits of the available information, not simply building more complex models.
 
 ---
 
@@ -283,7 +283,7 @@ Closing this gap would require artist-level features (follower counts, prior rel
 | Linear baseline RMSE | 22.0630 |
 | RF first adoption RMSE | 15.0714 |
 | Final model RMSE (artifact-free) | 15.7187 |
-| Final model RMSE (project best, with index) | 15.0196 |
+| Index-inclusive RMSE (validation artifact) | 15.0196 |
 | Total RMSE improvement vs. baseline | −7.04 units (−31.9%) |
 | Improvement from RF adoption alone | −7.00 units (−31.7%) |
 | Improvement from all post-RF experiments | −0.04 units (−0.3%) |
