@@ -1,4 +1,4 @@
-# The Limits of Audio-Only Popularity Prediction: An AutoResearch Study on Spotify Track Data
+# The Limits of Audio-Only Popularity Prediction: An AutoResearch Investigation of Spotify Track Popularity
 
 **Emily Yoo**
 AutoResearch Program, Weeks 2–6
@@ -7,7 +7,7 @@ AutoResearch Program, Weeks 2–6
 
 ## Abstract
 
-This paper presents a six-week autonomous research study on Spotify popularity prediction using numeric audio features. Starting from a LinearRegression baseline (RMSE 22.06, R² = 0.026), the project demonstrates that tree-based ensemble models — specifically RandomForestRegressor — dramatically outperform linear models (RMSE 15.02, R² = 0.548), a 31.9% relative improvement. However, the central finding is not the performance gain itself but the speed at which further progress halts: five weeks and fifteen post-baseline experiments combined moved RMSE by 0.06 units. A popularity bucket analysis explains why. The model performs adequately on medium-popularity tracks (RMSE 11.53) but fails severely on high-popularity tracks (RMSE 28.48, systematic bias −23.26), because the factors that elevate a song to breakout popularity — artist reputation, playlist placement, and release context — are entirely absent from the numeric audio feature set. A feature-bucket error analysis confirms that the failure is localized to popularity-outcome space, not audio-feature space: slicing by danceability, energy, or tempo produces at most a 3.1-unit RMSE spread with near-zero bias, while slicing by popularity bucket produces a 15.2-unit spread and a 33.9-unit bias swing. The project's primary contribution is characterizing this information ceiling precisely and demonstrating that it is not addressable through model selection, hyperparameter tuning, or preprocessing alone.
+This paper presents a six-week autonomous research study on Spotify popularity prediction using numeric audio features. Starting from a LinearRegression baseline (RMSE 22.06, R² = 0.026), the project demonstrates that tree-based ensemble models — specifically RandomForestRegressor — dramatically outperform linear models (RMSE 15.02, R² = 0.548), a 31.9% relative improvement. However, the central finding is not the performance gain itself but the speed at which further progress halts: subsequent feature engineering, hyperparameter tuning, and alternative model experiments produced only marginal improvements beyond the initial Random Forest gain.. A popularity bucket analysis explains why. The model performs adequately on medium-popularity tracks (RMSE 11.53) but fails severely on high-popularity tracks (RMSE 28.48, systematic bias −23.26), because the factors that elevate a song to breakout popularity — artist reputation, playlist placement, and release context — are entirely absent from the numeric audio feature set. A feature-bucket error analysis confirms that the failure is localized to popularity-outcome space, not audio-feature space: slicing by danceability, energy, or tempo produces at most a 3.1-unit RMSE spread with near-zero bias, while slicing by popularity bucket produces a 15.2-unit spread and a 33.9-unit bias swing. The project's primary contribution is characterizing this information ceiling precisely and demonstrating that it is not addressable through model selection, hyperparameter tuning, or preprocessing alone.
 
 ---
 
@@ -23,7 +23,7 @@ Over six weeks and 16 experiments, this project arrives at a clear and interpret
 
 ## 2. Research Question
 
-**Can Spotify track popularity be predicted from numeric audio features, and where does audio-feature information become insufficient?**
+**Can Spotify track popularity be predicted from numeric audio features, and what are the practical limits of audio-only prediction?**
 
 The numeric audio features available are: danceability, energy, loudness, tempo, speechiness, acousticness, instrumentalness, liveness, valence, key, mode, time signature, and duration. The target variable is `popularity`, an integer from 0 to 100.
 
@@ -44,7 +44,7 @@ The dataset consists of 114,000 Spotify tracks. The target variable `popularity`
 
 The train/validation/test split is 60/20/20 with random_state=42, frozen for the duration of the project. The test set is not touched during any experiment. All reported metrics are validation RMSE unless explicitly noted otherwise.
 
-One dataset artifact was identified and validated in Week 6: the `index` column (the CSV's row number, 0–113,999) was included in the raw feature set and achieved the highest RF feature importance at 35.8%. The artifact arose because the CSV is sorted by genre, making row position a noisy genre proxy. Removing `index` raises overall validation RMSE by 0.70 units (from 15.02 to 15.72) but reduces high-popularity bucket RMSE by 3.24 units and redistributes importance evenly across the 8 core audio features. All three project conclusions survive removal. The artifact-free model (RMSE 15.72) is the honest representation of what numeric audio features alone achieve; the index-inclusive model (RMSE 15.02) is the project-retained best under the keep/discard/crash rule and is reported alongside for completeness.
+One dataset artifact was identified and validated in Week 6: the `index` column (the CSV's row number, 0–113,999) was included in the raw feature set and achieved the highest RF feature importance at 35.8%. The artifact arose because the CSV is sorted by genre, making row position a noisy genre proxy. Removing `index` raises overall validation RMSE by 0.70 units (from 15.02 to 15.72) but reduces high-popularity bucket RMSE by 3.24 units and redistributes importance evenly across the 8 core audio features. All three project conclusions survive removal. The artifact-free model (RMSE 15.72) is the honest representation of what numeric audio features alone achieve.
 
 ### 3.2 Experimental Protocol
 
