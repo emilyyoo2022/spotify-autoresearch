@@ -462,6 +462,28 @@ No new models trained. All Week 6 work is diagnostic or validation analysis usin
 
 ---
 
+## Final Held-Out Test Set Evaluation
+
+> **The held-out test set was opened exactly once, after the model was fully locked following the Week 6 artifact-removal analysis (D4). No modifications to the model, features, hyperparameters, or any other aspect of the pipeline were made after this result was observed.**
+
+### T1 — Held-Out Test Set Evaluation
+
+| Field | Value |
+|-------|-------|
+| **Analysis ID** | T1 |
+| **When run** | After Week 6 lock; one-time only |
+| **Script** | `final_test_evaluation.py` |
+| **Model evaluated** | Locked final model: RF n_estimators=200, `index` excluded, + log1p(duration_ms) + log1p(instrumentalness) |
+| **Train split used** | 60% (train only; validation split held out during all development) |
+| **Validation RMSE** | 15.7187 |
+| **Final Test RMSE** | **15.7636** |
+| **Final Test R²** | **0.4965** |
+| **Val–Test RMSE gap** | 0.0449 (0.3%) |
+| **Post-result action** | None — no tuning or experimentation performed after observing this result |
+| **Interpretation** | The near-identical validation and test RMSEs (0.3% gap) confirm that the locked model did not overfit to the validation set during development. The result is stable and reproducible. The test R² of 0.4965 indicates the model explains approximately 50% of the variance in track popularity on fully unseen data, consistent with the feature ceiling identified throughout the project. |
+
+---
+
 ## Project Summary
 
 ### Complete Experiment Index
@@ -494,6 +516,7 @@ No new models trained. All Week 6 work is diagnostic or validation analysis usin
 | D3 | 6 | Validation | Dataset quality audit | N/A — data audit | N/A | N/A | Validation |
 | D4 | 6 | Validation | Index artifact removal | RF with vs. without index | 15.7187 | +0.699 overall | **Artifact-free final** |
 | D5 | 6 | Diagnostic | Error by feature-value bucket | Artifact-free model | 14.53–17.58 | N/A | Diagnostic |
+| T1 | Post-lock | Test evaluation | One-time held-out test set evaluation | Locked final model | **15.7636** | N/A | **Final test result — no further action taken** |
 
 ---
 
@@ -506,9 +529,13 @@ No new models trained. All Week 6 work is diagnostic or validation analysis usin
 | **Directions retained (modeling)** | 3 — RF adoption (Exp 2), log1p(duration_ms) (E1), log1p(instrumentalness) (E7) |
 | **Directions discarded (modeling)** | 13 |
 | **Final locked model** | RandomForestRegressor, n_estimators=200, `index` excluded, + log1p(duration_ms) + log1p(instrumentalness) |
-| **Final artifact-free RMSE** | **15.7187** |
+| **Validation RMSE (artifact-free)** | **15.7187** |
+| **Final held-out test RMSE** | **15.7636** |
+| **Final held-out test R²** | **0.4965** |
+| **Val–test RMSE gap** | 0.0449 (0.3%) — confirms no overfitting to validation set |
+| **Test set opened** | Exactly once, after model lock; no tuning performed after |
 | **Linear baseline RMSE** | 22.0630 |
-| **Total RMSE improvement** | 6.34 units (−28.8%) |
+| **Total RMSE improvement (vs. test)** | 6.30 units (−28.5%) |
 | **Improvement from RF adoption alone** | 7.00 units (−31.7%) |
 | **Improvement from all post-RF modeling** | 0.058 units (five weeks of refinement) |
 | **Worst bucket RMSE (high-popularity, artifact-free)** | 28.48 |

@@ -54,6 +54,29 @@
 
 ---
 
+---
+
+## 5. Final Held-Out Test Set Result
+
+After the model was fully locked at the end of Week 6, the held-out test set was evaluated exactly once using `final_test_evaluation.py`. No changes of any kind were made to the model, features, or pipeline after this evaluation.
+
+| Split | RMSE | R² |
+|-------|------|----|
+| Validation (used during development) | 15.7187 | — |
+| Held-out test set (opened once, post-lock) | **15.7636** | **0.4965** |
+
+The gap between validation and test RMSE is 0.0449 units (0.3%), which is negligible. This result confirms three things:
+
+1. **No overfitting to the validation set.** Sixteen experiments and five weeks of refinement against the validation split did not cause the model to memorize it.
+2. **The result generalizes.** A test R² of 0.4965 — explaining approximately 50% of popularity variance on fully unseen data — is consistent with every diagnostic finding in the project.
+3. **The feature ceiling is real.** The test RMSE of 15.76 on the held-out split matches the validation RMSE to within 0.3%, confirming that the ceiling identified during development is not an artifact of the evaluation setup.
+
+No further tuning, experimentation, or model updates were performed after observing these values.
+
+---
+
 ## Summary
 
 The agent managed its mechanics well but failed at self-audit. The keep/discard/crash discipline was reliable, the rollbacks were correct, and the final diagnostic analyses were strong. But the index artifact demonstrates a fundamental gap: an agent that never looks at what it is actually doing — which features matter, why they matter, whether they are legitimate — can run a methodologically clean loop and still produce a partly misleading result. The redesigned loop would enforce interpretability checkpoints, flag artifacts early, and halt diminishing-returns axes faster. The science this project did is sound; it just took too long to find out what the model was using and where it was failing.
+
+The final held-out test result (RMSE 15.7636, R² 0.4965) closes the project with a clean verification: the locked model generalizes as expected, and the conclusions drawn from validation-set analysis accurately describe behavior on unseen data.

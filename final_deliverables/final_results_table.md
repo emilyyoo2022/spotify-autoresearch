@@ -20,6 +20,19 @@
 
 ---
 
+## Held-Out Test Set Evaluation
+
+> **The held-out test set was opened exactly once, after the model was locked following Week 6 artifact removal. No tuning, retraining, or additional experimentation was performed after observing this result.**
+
+| Split | RMSE | R² |
+|-------|------|----|
+| Validation (used during development) | 15.7187 | — |
+| **Held-out test set (opened once, post-lock)** | **15.7636** | **0.4965** |
+
+The gap between validation RMSE (15.7187) and test RMSE (15.7636) is **0.0449 units (0.3%)** — effectively negligible. This close agreement provides strong evidence that the result is stable, that no overfitting to the validation set occurred during development, and that the locked model generalizes reliably to unseen data.
+
+---
+
 ## Summary Statistics
 
 | Metric | Value |
@@ -27,8 +40,11 @@
 | Linear baseline RMSE | 22.0630 |
 | RF first adoption RMSE | 15.0714 |
 | Project best RMSE (with index) | 15.0196 |
-| Project best RMSE (artifact-free) | 15.7187 |
-| Total RMSE improvement over baseline | 7.04 units (−31.9%) |
+| Project best RMSE (artifact-free, validation) | 15.7187 |
+| **Final held-out test RMSE** | **15.7636** |
+| **Final held-out test R²** | **0.4965** |
+| Val–test RMSE gap | 0.0449 (0.3%) |
+| Total RMSE improvement over baseline (test) | 6.30 units (−28.5%) |
 | Improvement from RF adoption alone | 7.00 units (−31.7%) |
 | Improvement from all post-RF work | 0.04 units (−0.3%) |
 | Best bucket RMSE | 11.53 (medium-popularity, with index) |

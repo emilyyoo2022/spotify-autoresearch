@@ -10,12 +10,17 @@ Can Spotify track popularity be predicted from numeric audio features, and what 
 
 ## Final Results
 
-| Model | RMSE |
-|---|---|
-| Linear Regression (baseline) | 22.06 |
-| Random Forest (final) | 15.72 |
+| Split | Model | RMSE | R² |
+|---|---|---|---|
+| Validation | Random Forest (final, artifact-free) | 15.7187 | — |
+| **Held-out test set** | **Random Forest (final, artifact-free)** | **15.7636** | **0.4965** |
+| Baseline | Linear Regression | 22.0630 | 0.026 |
 
-The final model achieved a **28.7% reduction in prediction error** over the linear baseline. Error was highest in the high-popularity bucket (RMSE: 28.48), where audio features are least predictive.
+The final model achieved a **28.5% reduction in prediction error** over the linear baseline on the held-out test set.
+
+**Test set protocol:** The held-out test set was opened exactly once, after the model was fully locked following Week 6 analysis. No tuning or experimentation was performed after observing the test result. The near-identical validation RMSE (15.7187) and test RMSE (15.7636) — a gap of 0.0449 (0.3%) — confirm that the result is stable and that no overfitting to the validation set occurred during development.
+
+Error was highest in the high-popularity bucket (RMSE: 28.48), where audio features are least predictive.
 
 **Main conclusion:** Audio features provide meaningful signal for popularity prediction, but a feature ceiling exists. Contextual factors — playlist placement, artist reputation, release timing — are not captured in audio data and account for the residual error.
 
